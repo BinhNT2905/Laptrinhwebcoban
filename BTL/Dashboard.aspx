@@ -17,9 +17,6 @@
             <a href="QuanLyNguoiDung.aspx" class="dashboard-link">
                 <i class="fas fa-users"></i> Quản Lý Người Dùng
             </a>
-            <a href="#" class="dashboard-link">
-                <i class="fas fa-file-invoice"></i> Quản Lý Đơn Hàng (Chưa code)
-            </a>
         </div>
     </div>
 </asp:Content>

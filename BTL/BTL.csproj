@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="banner1.jpg" />
     <Content Include="ChiTietSanPham.aspx" />
     <Content Include="DangKy.aspx" />
     <Content Include="DangNhap.aspx" />
@@ -74,8 +75,16 @@
     <Content Include="GioHang.aspx" />
     <Content Include="Global.asax" />
     <Content Include="OIP.png" />
+    <Content Include="pictures\sp1.jpg" />
+    <Content Include="pictures\sp6.jpg" />
+    <Content Include="pictures\sp7.jpg" />
     <Content Include="QuanLyNguoiDung.aspx" />
     <Content Include="QuanLySanPham.aspx" />
+    <Content Include="SanPhamMoi.aspx" />
+    <Content Include="pictures\sp_hobo.jpg" />
+    <Content Include="pictures\sp_khoakeo.jpg" />
+    <Content Include="pictures\sp_kinh.jpg" />
+    <Content Include="pictures\sp4.jpg" />
     <Content Include="Style.css" />
     <Content Include="ThanhToan.aspx" />
     <Content Include="ThanhToanThanhCong.aspx" />
@@ -139,6 +148,12 @@
       <DependentUpon>QuanLySanPham.aspx</DependentUpon>
     </Compile>
     <Compile Include="SanPham.cs" />
+    <Compile Include="SanPhamMoi.aspx.cs">
+      <DependentUpon>SanPhamMoi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SanPhamMoi.aspx.designer.cs">
+      <DependentUpon>SanPhamMoi.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.master.cs">
       <DependentUpon>Site.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

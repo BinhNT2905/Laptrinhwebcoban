@@ -42,6 +42,15 @@ namespace BTL
         protected global::System.Web.UI.WebControls.TextBox txtUser;
 
         /// <summary>
+        /// rfvUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvUser;
+
+        /// <summary>
         /// txtPass control.
         /// </summary>
         /// <remarks>
@@ -49,6 +58,15 @@ namespace BTL
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPass;
+
+        /// <summary>
+        /// rfvPass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPass;
 
         /// <summary>
         /// btnLogin control.
