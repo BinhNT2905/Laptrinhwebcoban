@@ -16,11 +16,12 @@ namespace BTL // Đã sửa từ BTL.LTW sang BTL
             }
 
             User currentUser = Session["CurrentUser"] as User;
+            
 
             // 2. Kiểm tra phân quyền Admin
             if (currentUser == null || currentUser.Role != "admin")
             {
-                Response.Redirect("TrangChu.aspx"); // Không phải admin -> đá về trang chủ
+                Response.Redirect("TrangChu.aspx"); 
                 return;
             }
 

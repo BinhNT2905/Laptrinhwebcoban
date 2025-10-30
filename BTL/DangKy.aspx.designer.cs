@@ -42,6 +42,15 @@ namespace BTL
         protected global::System.Web.UI.WebControls.TextBox txtUser;
 
         /// <summary>
+        /// txtPhone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPhone;
+
+        /// <summary>
         /// txtPass control.
         /// </summary>
         /// <remarks>
@@ -51,6 +60,15 @@ namespace BTL
         protected global::System.Web.UI.WebControls.TextBox txtPass;
 
         /// <summary>
+        /// txtRePass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRePass;
+
+        /// <summary>
         /// btnRegister control.
         /// </summary>
         /// <remarks>
@@ -58,14 +76,5 @@ namespace BTL
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRegister;
-
-        /// <summary>
-        /// lnkLogin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkLogin;
     }
 }

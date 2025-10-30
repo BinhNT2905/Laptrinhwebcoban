@@ -81,13 +81,14 @@ namespace BTL // Đã sửa từ BTL.LTW sang BTL
         }
 
         // Cập nhật người dùng
+        // Cập nhật người dùng
         protected void gvUserList_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = gvUserList.Rows[e.RowIndex];
             string usernameToUpdate = gvUserList.DataKeys[e.RowIndex].Value.ToString();
 
-            // Lấy giá trị mới từ các controls trong EditItemTemplate
             string newPassword = (row.FindControl("txtEditPassword") as TextBox).Text.Trim();
+            string newPhone = (row.FindControl("txtEditPhone") as TextBox).Text.Trim(); // ✅ lấy phone
             string newRole = (row.FindControl("ddlEditRole") as DropDownList).SelectedValue;
 
             if (string.IsNullOrEmpty(newPassword))
@@ -96,12 +97,31 @@ namespace BTL // Đã sửa từ BTL.LTW sang BTL
                 return;
             }
 
+            // ✅ validate số điện thoại (10 số)
+            if (string.IsNullOrEmpty(newPhone) || newPhone.Length != 10 || !newPhone.All(char.IsDigit))
+            {
+                lblMessage.Text = "Số điện thoại phải gồm 10 chữ số!";
+                return;
+            }
+
             Application.Lock();
             User userToUpdate = UserList.FirstOrDefault(u => u.Username == usernameToUpdate);
             if (userToUpdate != null)
             {
                 userToUpdate.Password = newPassword;
+                userToUpdate.Phone = newPhone;   // ✅ cập nhật phone
                 userToUpdate.Role = newRole;
+
+                // ✅ update luôn session nếu là user đang đăng nhập
+                var current = Session["CurrentUser"] as User;
+                if (current != null && current.Username == usernameToUpdate)
+                {
+                    current.Password = newPassword;
+                    current.Phone = newPhone;
+                    current.Role = newRole;
+                    Session["CurrentUser"] = current;
+                }
+
                 lblMessage.Text = $"Đã cập nhật người dùng: {usernameToUpdate}";
             }
             Application.UnLock();
@@ -109,5 +129,7 @@ namespace BTL // Đã sửa từ BTL.LTW sang BTL
             gvUserList.EditIndex = -1;
             LoadUserList();
         }
+
+
     }
 }

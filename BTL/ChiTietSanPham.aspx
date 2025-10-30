@@ -6,40 +6,63 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div style="padding: 40px; max-width: 1200px; margin: 0 auto;">
-        
-        <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true" Style="display: block; margin-bottom: 20px;"></asp:Label>
 
-        <div id="productDetail" runat="server" visible="false" style="display: flex; gap: 40px;">
-            
-            <div style="flex: 1; max-width: 500px;">
-                <asp:Image ID="imgHinhAnh" runat="server" style="width: 100%; border: 1px solid #eee; border-radius: 8px;" />
+    <div class="container">
+
+        <!-- Thông báo -->
+        <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true"
+            Style="display:block; margin-bottom:20px;"></asp:Label>
+
+        <!-- Chi tiết sản phẩm -->
+        <div id="productDetail" runat="server" visible="false" class="product-detail">
+
+            <!-- Khối ảnh -->
+            <div class="image-section">
+                <img id="mainImage" runat="server" class="main-image" alt="Ảnh sản phẩm" />
+
+                <!-- Gallery ảnh nhỏ -->
+                <div id="thumbnailList" runat="server" class="thumb-gallery"></div>
+
+                <script>
+                    function changeMainImage(src, thumb) {
+                        const mainImg = document.getElementById('<%= mainImage.ClientID %>');
+                        if (mainImg) {
+                            mainImg.src = src;
+                        }
+                        // Active border
+                        document.querySelectorAll('.thumb-gallery img').forEach(img => img.classList.remove('active'));
+                        if (thumb) thumb.classList.add('active');
+                    }
+                </script>
             </div>
 
-            <div style="flex: 1.5; padding-top: 10px;">
-                <h1 style="color: #333; margin-bottom: 15px;">
-                    <asp:Label ID="lblTenSP" runat="server"></asp:Label>
-                </h1>
-                
-                <p style="font-size: 24px; color: #d62b70; font-weight: bold; margin-bottom: 25px;">
+            <!-- Thông tin -->
+            <div class="info-section">
+                <h1><asp:Label ID="lblTenSP" runat="server"></asp:Label></h1>
+
+                <p class="price">
                     <asp:Label ID="lblGia" runat="server"></asp:Label>
                 </p>
 
-                <div style="margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid #eee;">
-                    <h3 style="font-size: 18px; margin-bottom: 10px; color: #555;">Mô tả sản phẩm:</h3>
-                    <p>Mã SP: <asp:Label ID="lblMaSP" runat="server"></asp:Label></p>
-                    <asp:Label ID="lblMoTa" runat="server" style="line-height: 1.8;"></asp:Label>
-                </div>
-                
-                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 30px;">
-                    <label>Số lượng:</label>
-                    <asp:TextBox ID="txtSoLuong" runat="server" Text="1" TextMode="Number" CssClass="form-control" 
-                        Style="width: 60px; text-align: center;" />
+                <div class="description">
+                    <p><strong>Mã SP:</strong> <asp:Label ID="lblMaSP" runat="server"></asp:Label></p>
+                    <asp:Label ID="lblMoTa" runat="server"></asp:Label>
                 </div>
 
-                <asp:Button ID="btnThemVaoGio" runat="server" Text="Thêm vào Giỏ hàng" CssClass="auth-button" Style="width: 250px; font-size: 16px; padding: 12px;" OnClick="btnThemVaoGio_Click"/>
-                
-                <p style="margin-top: 30px;"><a href="TrangChu.aspx" style="color: #555; text-decoration: none;"><i class="fas fa-chevron-left"></i> Quay lại mua sắm</a></p>
+                <div class="actions">
+                    <label for="txtSoLuong">Số lượng:</label>
+                    <asp:TextBox ID="txtSoLuong" runat="server" CssClass="quantity-input" Text="1" TextMode="Number" min="1" oninput="validSoLuong(this)" />
+
+                </div>
+
+                <div class="buttons">
+                    <asp:Button ID="btnThemVaoGio" runat="server" CssClass="btn btn-cart" Text="🛒 Thêm vào giỏ hàng"
+                        OnClick="btnThemVaoGio_Click" />
+                    <asp:Button ID="btnMuaNgay" runat="server" CssClass="btn btn-buy" Text="⚡ Mua ngay"
+                        OnClick="btnMuaNgay_Click" />
+                </div>
+
+                <a href="TrangChu.aspx" class="back-link">← Quay lại mua sắm</a>
             </div>
         </div>
     </div>

@@ -21,20 +21,17 @@ namespace BTL
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            // 1. Lấy danh sách người dùng
             var users = (List<User>)Application["UserList"];
             string user = txtUser.Text.Trim();
             string pass = txtPass.Text.Trim();
 
-            // 2. Tìm người dùng khớp với username và password
+            // ✅ Check login từ danh sách user
             var found = users.FirstOrDefault(u => u.Username == user && u.Password == pass);
 
             if (found != null)
             {
-                // Đăng nhập thành công: Lưu User vào Session
                 Session["CurrentUser"] = found;
 
-                // 3. Phân quyền và chuyển hướng
                 if (found.Role == "admin")
                     Response.Redirect("Dashboard.aspx");
                 else
@@ -42,9 +39,9 @@ namespace BTL
             }
             else
             {
-                // Đăng nhập thất bại
                 lblMsg.Text = "Sai tài khoản hoặc mật khẩu!";
             }
         }
+
     }
 }

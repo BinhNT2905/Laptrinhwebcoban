@@ -67,6 +67,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="banner1.jpg" />
+    <Content Include="CamOn.aspx" />
     <Content Include="ChiTietSanPham.aspx" />
     <Content Include="DangKy.aspx" />
     <Content Include="DangNhap.aspx" />
@@ -74,8 +76,33 @@
     <Content Include="GioHang.aspx" />
     <Content Include="Global.asax" />
     <Content Include="OIP.png" />
+    <Content Include="pictures\sp1.jpg" />
+    <Content Include="pictures\sp10.jpg" />
+    <Content Include="pictures\sp11.jpg" />
+    <Content Include="pictures\sp12.jpg" />
+    <Content Include="pictures\sp13.jpg" />
+    <Content Include="pictures\sp14_1.jpg" />
+    <Content Include="pictures\sp14_2.jpg" />
+    <Content Include="pictures\sp14_3.jpg" />
+    <Content Include="pictures\sp15_1.jpg" />
+    <Content Include="pictures\sp15_2.jpg" />
+    <Content Include="pictures\sp15_3.jpg" />
+    <Content Include="pictures\sp16_1.jpg" />
+    <Content Include="pictures\sp16_2.jpg" />
+    <Content Include="pictures\sp16_3.jpg" />
+    <Content Include="pictures\sp5.jpg" />
+    <Content Include="pictures\sp5_1.jpg" />
+    <Content Include="pictures\sp5_2.jpg" />
+    <Content Include="pictures\sp6.jpg" />
+    <Content Include="pictures\sp7.jpg" />
+    <Content Include="pictures\sp9.jpg" />
     <Content Include="QuanLyNguoiDung.aspx" />
     <Content Include="QuanLySanPham.aspx" />
+    <Content Include="SanPhamMoi.aspx" />
+    <Content Include="pictures\sp_hobo.jpg" />
+    <Content Include="pictures\sp_khoakeo.jpg" />
+    <Content Include="pictures\sp_kinh.jpg" />
+    <Content Include="pictures\sp4.jpg" />
     <Content Include="Style.css" />
     <Content Include="ThanhToan.aspx" />
     <Content Include="ThanhToanThanhCong.aspx" />
@@ -85,6 +112,14 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CamOn.aspx.cs">
+      <DependentUpon>CamOn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CamOn.aspx.designer.cs">
+      <DependentUpon>CamOn.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CartItem.cs" />
     <Compile Include="ChiTietSanPham.aspx.cs">
       <DependentUpon>ChiTietSanPham.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -139,6 +174,12 @@
       <DependentUpon>QuanLySanPham.aspx</DependentUpon>
     </Compile>
     <Compile Include="SanPham.cs" />
+    <Compile Include="SanPhamMoi.aspx.cs">
+      <DependentUpon>SanPhamMoi.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SanPhamMoi.aspx.designer.cs">
+      <DependentUpon>SanPhamMoi.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.master.cs">
       <DependentUpon>Site.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

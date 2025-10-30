@@ -35,10 +35,10 @@
                 <a href="TrangChu.aspx">Trang Chủ</a>
                 <a href="SanPhamMoi.aspx">Sản Phẩm Mới</a>
                 <a href="TinTuc.aspx">Tin Tức</a>
+                <a href="#">Giới thiệu</a>
             </nav>
 
             <div class="actions">
-                <div class="icon"><i class="far fa-heart"></i><span>0</span></div>
 
                 <asp:PlaceHolder ID="phChucNangAdmin" runat="server" Visible="false">
                     <a href="Dashboard.aspx" class="icon" title="Dashboard Admin"><i class="fas fa-cog"></i></a>
@@ -54,7 +54,8 @@
                     <asp:LinkButton ID="lbtDangXuat" runat="server" Text="Thoát" OnClick="lbtDangXuat_Click" CssClass="action-item" Style="font-size: 14px; text-decoration: none; color: #333;"></asp:LinkButton>
                 </asp:PlaceHolder>
 
-                <a href="GioHang.aspx" class="icon"><i class="fas fa-shopping-bag"></i><span>0</span></a>
+                <%-- ICON GIỎ HÀNG CHỈ CÒN ICON, KHÔNG CÒN SỐ LƯỢNG --%>
+                <a href="GioHang.aspx" class="icon"><i class="fas fa-shopping-bag"></i></a> 
             </div>
         </header>
 
@@ -99,5 +100,13 @@
             </div>
         </footer>
     </form>
+    <script>
+            window.addEventListener("scroll", function () {
+                const header = document.querySelector(".header");
+                if (window.scrollY > 40) header.classList.add("sticky");
+                else header.classList.remove("sticky");
+            });
+    </script>
+
 </body>
 </html>

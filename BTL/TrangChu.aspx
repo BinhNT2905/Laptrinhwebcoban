@@ -12,9 +12,7 @@
             <div class="slide active">
                 <img src="banner1.jpg" alt="Banner 1" />
             </div>
-            <div class="slide">
-                <img src="banner2.jpg" alt="Banner 2" />
-            </div>
+            
             <div class="slide">
                 <img src="https://www.vascara.com/uploads/banner/2025/August/25/18281756119351.jpg" alt="Banner 3" />
             </div>
@@ -31,9 +29,9 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <div class="product-card">
-                        <a href='<%# "ChiTietSanPham.aspx?MaSP=" + Eval("MaSP") %>'>
-                            <img src='<%# Eval("HinhAnh") %>' alt='<%# Eval("TenSP") %>' />
-                        </a>
+                            <a href='<%# "ChiTietSanPham.aspx?MaSP=" + Eval("MaSP") %>'>
+                                <img src='<%# Eval("HinhAnh") %>' alt='<%# Eval("TenSP") %>' />
+                            </a>
                         
                         <h3>
                             <asp:HyperLink ID="lnkTenSP" runat="server" 
@@ -42,9 +40,7 @@
                         </h3>
                         
                         <p class="price"><%# string.Format("{0:N0}", Eval("Gia")) %>₫</p>
-                        
-                        <asp:LinkButton ID="btnThemVaoGio" runat="server" CssClass="btn-buy" 
-                                CommandArgument='<%# Eval("MaSP") %>' Text="Thêm vào giỏ" />
+
                     </div>
                 </ItemTemplate>
                 <EmptyDataTemplate>
