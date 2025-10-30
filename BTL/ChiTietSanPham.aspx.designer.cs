@@ -33,13 +33,22 @@ namespace BTL
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl productDetail;
 
         /// <summary>
-        /// imgHinhAnh control.
+        /// mainImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgHinhAnh;
+        protected global::System.Web.UI.HtmlControls.HtmlImage mainImage;
+
+        /// <summary>
+        /// thumbnailList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl thumbnailList;
 
         /// <summary>
         /// lblTenSP control.
@@ -94,5 +103,14 @@ namespace BTL
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnThemVaoGio;
+
+        /// <summary>
+        /// btnMuaNgay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnMuaNgay;
     }
 }

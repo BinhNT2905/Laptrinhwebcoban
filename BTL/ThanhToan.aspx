@@ -6,52 +6,135 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div style="padding: 40px; max-width: 800px; margin: 0 auto;">
-        <h1 style="color: #d62b70; margin-bottom: 30px; text-align: center;">Thông Tin Thanh Toán</h1>
-        
-        <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true" Style="display: block; margin-bottom: 15px;"></asp:Label>
 
-        <div style="border: 1px solid #ccc; padding: 30px; border-radius: 8px; margin-bottom: 30px;">
-            <h2 style="color: #555; margin-bottom: 20px; font-size: 20px;">1. Thông tin giao hàng</h2>
-            
-            <div class="form-group">
-                <label>Họ tên người nhận <span style="color: red;">*</span></label>
-                <asp:TextBox ID="txtHoTen" runat="server" CssClass="form-control" required="required"></asp:TextBox>
-            </div>
-            
-            <div class="form-group">
-                <label>Số điện thoại <span style="color: red;">*</span></label>
-                <asp:TextBox ID="txtDienThoai" runat="server" TextMode="Number" CssClass="form-control" required="required"></asp:TextBox>
-            </div>
+<style>
+.checkout-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 25px;
+    background: #fff;
+}
+.checkout-title {
+    text-align: center;
+    color: #d62b70;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+.section-box {
+    background: #fafafa;
+    padding: 22px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 22px;
+}
+.section-title {
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: #444;
+}
+.form-group {
+    margin-bottom: 14px;
+}
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 4px;
+    display: block;
+}
+.input-box {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.summary-label {
+    color: #555;
+}
+.total-price {
+    font-weight: bold;
+    font-size: 20px;
+    color: #d62b70;
+}
+.btn-checkout {
+    background: #d62b70;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+}
+.btn-checkout:hover {
+    background: #b91b5e;
+}
+</style>
 
-            <div class="form-group">
-                <label>Địa chỉ giao hàng <span style="color: red;">*</span></label>
-                <asp:TextBox ID="txtDiaChi" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control" required="required"></asp:TextBox>
-            </div>
+<div class="checkout-container">
+    <h2 class="checkout-title">Thanh Toán Đơn Hàng</h2>
+
+    <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true"
+        Style="margin-bottom: 15px; display: block;"></asp:Label>
+
+    <!-- Thông tin giao hàng -->
+    <div class="section-box">
+        <div class="section-title">Thông tin giao hàng</div>
+
+        <div class="form-group">
+            <label>Họ tên người nhận *</label>
+            <asp:TextBox ID="txtHoTen" CssClass="input-box" runat="server"></asp:TextBox>
         </div>
 
-        <div style="border: 1px solid #ccc; padding: 30px; border-radius: 8px;">
-            <h2 style="color: #555; margin-bottom: 20px; font-size: 20px;">2. Tóm tắt đơn hàng</h2>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                <span>Tạm tính (2 Sản phẩm):</span>
-                <asp:Label ID="lblTamTinh" runat="server" Text="4,200,000₫"></asp:Label>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                <span>Phí vận chuyển:</span>
-                <span>30,000₫</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                <span style="font-weight: bold; font-size: 18px;">Tổng cộng:</span>
-                <asp:Label ID="lblTongCong" runat="server" Text="4,230,000₫" style="font-weight: bold; font-size: 18px; color: #d62b70;"></asp:Label>
-            </div>
+        <div class="form-group">
+            <label>Số điện thoại *</label>
+            <asp:TextBox ID="txtDienThoai" CssClass="input-box" runat="server"></asp:TextBox>
+        </div>
 
-            <h2 style="color: #555; margin-bottom: 15px; font-size: 20px;">3. Phương thức thanh toán</h2>
-            <asp:RadioButtonList ID="rblPhuongThuc" runat="server" RepeatDirection="Vertical" CssClass="form-control" Style="margin-bottom: 20px;">
+        <div class="form-group">
+            <label>Địa chỉ giao hàng *</label>
+            <asp:TextBox ID="txtDiaChi" CssClass="input-box" TextMode="MultiLine" Rows="3" runat="server"></asp:TextBox>
+        </div>
+    </div>
+
+    <!-- Tóm tắt đơn -->
+    <div class="section-box">
+        <div class="section-title">Tóm tắt đơn hàng</div>
+
+        <div class="summary-row">
+            <span>Sản phẩm:</span>
+            <asp:Label ID="lblSoSanPham" runat="server"></asp:Label>
+        </div>
+
+        <div class="summary-row">
+            <span class="summary-label">Tạm tính:</span>
+            <asp:Label ID="lblTamTinh" runat="server"></asp:Label>
+        </div>
+        <div class="summary-row" style="border-bottom:1px solid #eee; padding-bottom:8px;">
+            <span class="summary-label">Phí ship:</span>
+            <span>30,000₫</span>
+        </div>
+        <div class="summary-row">
+            <span class="total-price">Tổng cộng:</span>
+            <asp:Label ID="lblTongCong" CssClass="total-price" runat="server"></asp:Label>
+        </div>
+
+        <div class="form-group" style="margin-top:12px;">
+            <label>Phương thức thanh toán:</label>
+            <asp:RadioButtonList ID="rblPhuongThuc" runat="server">
                 <asp:ListItem Value="COD" Selected="True">Thanh toán khi nhận hàng (COD)</asp:ListItem>
                 <asp:ListItem Value="Transfer">Chuyển khoản ngân hàng</asp:ListItem>
             </asp:RadioButtonList>
-
-            <asp:Button ID="btnHoanTat" runat="server" Text="Hoàn tất Đặt hàng" OnClick="btnHoanTat_Click" CssClass="auth-button" Style="width: 100%; font-size: 18px; padding: 15px;"/>
         </div>
     </div>
+
+    <asp:Button ID="btnHoanTat" CssClass="btn-checkout" runat="server" Text="Hoàn tất đặt hàng" OnClick="btnHoanTat_Click" />
+</div>
+
 </asp:Content>

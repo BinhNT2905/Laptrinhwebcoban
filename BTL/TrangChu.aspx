@@ -40,9 +40,7 @@
                         </h3>
                         
                         <p class="price"><%# string.Format("{0:N0}", Eval("Gia")) %>₫</p>
-                        
-                        <asp:LinkButton ID="btnThemVaoGio" runat="server" CssClass="btn-buy" 
-                                CommandArgument='<%# Eval("MaSP") %>' Text="Thêm vào giỏ" />
+
                     </div>
                 </ItemTemplate>
                 <EmptyDataTemplate>

@@ -42,13 +42,13 @@ namespace BTL
         protected global::System.Web.UI.WebControls.TextBox txtUser;
 
         /// <summary>
-        /// rfvUser control.
+        /// txtPhone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvUser;
+        protected global::System.Web.UI.WebControls.TextBox txtPhone;
 
         /// <summary>
         /// txtPass control.
@@ -60,22 +60,13 @@ namespace BTL
         protected global::System.Web.UI.WebControls.TextBox txtPass;
 
         /// <summary>
-        /// rfvPass control.
+        /// txtRePass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPass;
-
-        /// <summary>
-        /// revPass control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revPass;
+        protected global::System.Web.UI.WebControls.TextBox txtRePass;
 
         /// <summary>
         /// btnRegister control.
@@ -85,14 +76,5 @@ namespace BTL
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRegister;
-
-        /// <summary>
-        /// lnkLogin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkLogin;
     }
 }

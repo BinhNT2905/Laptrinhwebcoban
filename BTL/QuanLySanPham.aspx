@@ -6,72 +6,106 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div style="padding: 30px; max-width: 1000px; margin: 0 auto;">
-        <h1 style="color: #d62b70; margin-bottom: 20px;">Quản Lý Sản Phẩm</h1>
-        
-        <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Font-Bold="true" Style="display: block; margin: 15px 0;"></asp:Label>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-        <div style="border: 1px solid #ccc; padding: 20px; margin-bottom: 30px; border-radius: 8px;">
-            <h2 style="font-size: 18px; color: #555; margin-bottom: 15px;">Thêm Sản phẩm mới</h2>
-            
-            <div class="form-group-inline">
-                <label>Mã SP:</label>
-                <asp:TextBox ID="txtMaSP" runat="server" CssClass="form-control" TextMode="Number" />
+<div class="admin-page">
+    <div class="admin-header">
+        <h1>👜 Quản Lý Sản Phẩm</h1>
+        <asp:Label ID="lblMessage" runat="server" CssClass="message"></asp:Label>
+    </div>
+
+    <!-- Form -->
+    <div class="card" id="formSanPham">
+        <h2 class="card-title">Thêm sản phẩm mới</h2>
+
+        <div class="form-grid">
+            <div>
+                <label>Mã SP</label>
+                <asp:TextBox ID="txtMaSP" runat="server" CssClass="input" TextMode="Number"/>
             </div>
-            <div class="form-group-inline">
-                <label>Tên SP:</label>
-                <asp:TextBox ID="txtTenSP" runat="server" CssClass="form-control" />
+
+            <div>
+                <label>Tên SP</label>
+                <asp:TextBox ID="txtTenSP" runat="server" CssClass="input"/>
             </div>
-            <div class="form-group-inline">
-                <label>Giá:</label>
-                <asp:TextBox ID="txtGia" runat="server" CssClass="form-control" TextMode="Number" />
+
+            <div>
+                <label>Giá</label>
+                <asp:TextBox ID="txtGia" runat="server" CssClass="input" TextMode="Number"/>
             </div>
-            <div class="form-group-inline">
-                <label>Ảnh (Tên file):</label>
-                <asp:TextBox ID="txtHinhAnh" runat="server" CssClass="form-control" Placeholder="vd: sp_moi.jpg" />
+
+            <div>
+                <label>Ảnh (file hoặc url)</label>
+                <asp:TextBox ID="txtHinhAnh" runat="server" CssClass="input" Placeholder="vd: pictures/sp1.jpg"/>
             </div>
-            <div class="form-group">
-                <label>Mô tả:</label>
-                <asp:TextBox ID="txtMoTa" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="2" />
+
+            <div class="grid-full">
+                <label>Mô tả</label>
+                <asp:TextBox ID="txtMoTa" runat="server" CssClass="input textarea" TextMode="MultiLine"/>
             </div>
-            
-            <asp:Button ID="btnThem" runat="server" Text="Thêm Sản phẩm" OnClick="btnThem_Click" CssClass="auth-button" Style="width: 200px;"/>
         </div>
-        
-        <h2 style="font-size: 20px; color: #d62b70; margin-bottom: 15px;">Danh sách Sản phẩm</h2>
 
-        <asp:GridView ID="gvSanPham" runat="server" AutoGenerateColumns="false" 
-            CssClass="grid-view" GridLines="None" CellPadding="10" DataKeyNames="MaSP"
+        <asp:Button ID="btnThem" runat="server" Text="➕ Thêm sản phẩm" CssClass="btn-primary" OnClick="btnThem_Click"/>
+    </div>
+
+    <!-- Table -->
+    <div class="card">
+        <h2 class="card-title">Danh sách sản phẩm</h2>
+
+        <asp:GridView ID="gvSanPham" runat="server" AutoGenerateColumns="false"
+            CssClass="table" GridLines="None" CellPadding="10" DataKeyNames="MaSP"
             OnRowDeleting="gvSanPham_RowDeleting"
             OnRowEditing="gvSanPham_RowEditing"
             OnRowUpdating="gvSanPham_RowUpdating"
             OnRowCancelingEdit="gvSanPham_RowCancelingEdit"
-            Style="width: 100%; border-collapse: collapse;">
-            
+            OnRowDataBound="gvSanPham_RowDataBound">
+
             <Columns>
                 <asp:BoundField DataField="MaSP" HeaderText="Mã SP" ReadOnly="True" />
-                <asp:TemplateField HeaderText="Ảnh" ItemStyle-Width="80px">
+
+                <asp:TemplateField HeaderText="Ảnh" ItemStyle-Width="70px">
                     <ItemTemplate>
-                        <img src='<%# Eval("HinhAnh") %>' style='width: 50px; height: 50px; object-fit: cover;' alt="Ảnh SP"/>
+                        <asp:Image ID="imgThumb" runat="server"
+                            ImageUrl='<%# Eval("HinhAnh") %>'
+                            Width="55px" Height="55px" CssClass="table-img" />
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Tên Sản phẩm">
-                    <ItemTemplate><%# Eval("TenSP") %></ItemTemplate>
-                    <EditItemTemplate><asp:TextBox ID="txtEditTenSP" runat="server" Text='<%# Bind("TenSP") %>' /></EditItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Giá">
-                    <ItemTemplate><%# string.Format("{0:N0}", Eval("Gia")) %></ItemTemplate>
-                    <EditItemTemplate><asp:TextBox ID="txtEditGia" runat="server" Text='<%# Bind("Gia") %>' TextMode="Number"/></EditItemTemplate>
-                </asp:TemplateField>
-                <asp:CommandField ShowEditButton="True" EditText="Sửa" UpdateText="Lưu" CancelText="Hủy" />
-                <asp:CommandField ShowDeleteButton="True" DeleteText="Xóa" />
-            </Columns>
-            
-            <HeaderStyle BackColor="#f3f3f3" Font-Bold="True" ForeColor="#333" />
-            <RowStyle BackColor="#ffffff" BorderColor="#eee" />
-        </asp:GridView>
-        
-        <p style="margin-top: 20px;"><a href="Dashboard.aspx" style="color: #555; text-decoration: none;"><i class="fas fa-chevron-left"></i> Quay lại Dashboard</a></p>
 
+                <asp:TemplateField HeaderText="Tên sản phẩm">
+                    <ItemTemplate><%# Eval("TenSP") %></ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditTenSP" runat="server" CssClass="input" Text='<%# Bind("TenSP") %>' />
+                    </EditItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Giá" ItemStyle-HorizontalAlign="Right">
+                    <ItemTemplate><%# string.Format("{0:N0}", Eval("Gia")) %> đ</ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditGia" runat="server" CssClass="input" Text='<%# Bind("Gia") %>' TextMode="Number" />
+                    </EditItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Hành động">
+                    <ItemTemplate>
+                        <asp:LinkButton ID="lnkEdit" runat="server" CommandName="Edit" Text="✏️ Sửa" OnClientClick="scrollToForm();" />&nbsp;&nbsp;
+                        <asp:LinkButton ID="lnkDelete" runat="server" CommandName="Delete"
+                            OnClientClick="return confirm('Bạn có chắc muốn xóa?');" Text="🗑️ Xóa" />
+                    </ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:LinkButton ID="lnkUpdate" runat="server" CommandName="Update" Text="💾 Lưu" />&nbsp;&nbsp;
+                        <asp:LinkButton ID="lnkCancel" runat="server" CommandName="Cancel" Text="❌ Hủy" />
+                    </EditItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+
+        <a href="Dashboard.aspx" class="link-back"><i class="fas fa-arrow-left"></i> Quay lại Dashboard</a>
     </div>
+</div>
+    <script>
+    function scrollToForm() {
+        document.getElementById("formSanPham").scrollIntoView({ behavior: "smooth" });
+    }
+    </script>
+
 </asp:Content>

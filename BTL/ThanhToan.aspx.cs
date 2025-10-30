@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
-namespace BTL // Namespace: BTL
+namespace BTL
 {
     public partial class ThanhToan : System.Web.UI.Page
     {
@@ -11,21 +14,45 @@ namespace BTL // Namespace: BTL
                 Response.Redirect("DangNhap.aspx");
                 return;
             }
+
+            if (!IsPostBack)
+            {
+                LoadCartSummary();
+            }
         }
 
-        protected void btnHoanTat_Click(object sender, EventArgs e)
+        private void LoadCartSummary()
         {
-            if (string.IsNullOrWhiteSpace(txtHoTen.Text) || string.IsNullOrWhiteSpace(txtDienThoai.Text) || string.IsNullOrWhiteSpace(txtDiaChi.Text))
+            var dt = Session["GioHang"] as System.Data.DataTable;
+
+            if (dt == null || dt.Rows.Count == 0)
             {
-                lblMessage.Text = "Vui lòng điền đầy đủ thông tin giao hàng.";
+                Response.Redirect("GioHang.aspx");
                 return;
             }
 
-            // Ghi nhận đơn hàng (Sẽ lưu DB sau)
+            int soSP = dt.AsEnumerable().Sum(row => Convert.ToInt32(row["SoLuong"]));
+            decimal tamTinh = dt.AsEnumerable().Sum(row => Convert.ToDecimal(row["ThanhTien"]));
+            decimal phiShip = 30000;
+            decimal tong = tamTinh + phiShip;
 
-            // Giả lập thành công
-            Session["LastOrderSuccess"] = true; // Lưu cờ thành công
-            Response.Redirect("ThanhToanThanhCong.aspx");
+            lblSoSanPham.Text = soSP.ToString();
+            lblTamTinh.Text = tamTinh.ToString("#,##0") + "₫";
+            lblTongCong.Text = tong.ToString("#,##0") + "₫";
+}
+
+
+        protected void btnHoanTat_Click(object sender, EventArgs e)
+        {
+            if (txtHoTen.Text.Trim() == "" || txtDiaChi.Text.Trim() == "" || txtDienThoai.Text.Trim() == "")
+            {
+                lblMessage.Text = "Vui lòng nhập đầy đủ thông tin giao hàng!";
+                return;
+            }
+
+            // Clear cart after order success
+            Session["Cart"] = null;
+            Response.Redirect("CamOn.aspx");
         }
     }
 }

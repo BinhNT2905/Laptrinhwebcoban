@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Web.UI.WebControls;
 
 namespace BTL
 {
@@ -9,42 +11,81 @@ namespace BTL
         {
             if (!IsPostBack)
             {
-                // Lấy mã sản phẩm từ URL
                 string maSP = Request.QueryString["MaSP"];
                 if (string.IsNullOrEmpty(maSP))
                 {
-                    lblMessage.Text = "Không tìm thấy sản phẩm!";
+                    lblMessage.Text = "❌ Không tìm thấy sản phẩm!";
                     productDetail.Visible = false;
                     return;
                 }
 
-                // Ở đây bạn có thể truy vấn DB hoặc lấy từ Application["ProductList"]
-                // Ví dụ tạm thời (giả lập):
-                lblMaSP.Text = maSP;
-                lblTenSP.Text = "Túi Đeo Vai Hobo Minimalist";
-                lblGia.Text = "1,200,000 ₫";
-                lblMoTa.Text = "Chiếc túi thời trang cao cấp với phong cách tối giản.";
-                imgHinhAnh.ImageUrl = ResolveUrl("~/pictures/sp_hobo.jpg");
-                productDetail.Visible = true;
+                LayThongTinSanPham(maSP);
             }
         }
 
-        protected void btnThemVaoGio_Click(object sender, EventArgs e)
+        private void LayThongTinSanPham(string maSP)
         {
-            // Kiểm tra đăng nhập
+            var dsSanPham = Application["SanPhamList"] as List<SanPham>;
+            if (dsSanPham == null)
+            {
+                lblMessage.Text = "⚠️ Không có dữ liệu sản phẩm!";
+                productDetail.Visible = false;
+                return;
+            }
+
+            SanPham sp = dsSanPham.Find(s => s.MaSP.ToString() == maSP);
+            if (sp == null)
+            {
+                lblMessage.Text = "⚠️ Không tìm thấy sản phẩm!";
+                productDetail.Visible = false;
+                return;
+            }
+
+            lblMaSP.Text = sp.MaSP.ToString();
+            lblTenSP.Text = sp.TenSP;
+            lblGia.Text = string.Format("{0:N0} ₫", sp.Gia);
+            lblMoTa.Text = sp.MoTa;
+            mainImage.Src = ResolveUrl("~/" + sp.HinhAnh);
+
+            if (sp.HinhAnhPhu != null && sp.HinhAnhPhu.Count > 0)
+            {
+                string html = "";
+                foreach (string anh in sp.HinhAnhPhu)
+                {
+                    string url = ResolveUrl("~/" + anh);
+                    html += $"<img src='{url}' onclick='changeMainImage(this.src, this)' alt='Ảnh phụ' />";
+                }
+                thumbnailList.InnerHtml = html;
+            }
+
+            productDetail.Visible = true;
+        }
+
+        protected void btnThemVaoGio_Click(object sender, EventArgs e) => ThemVaoGioHang(false);
+
+        protected void btnMuaNgay_Click(object sender, EventArgs e) => ThemVaoGioHang(true);
+
+        private void ThemVaoGioHang(bool diDenGioHang)
+        {
             if (Session["CurrentUser"] == null)
             {
                 Response.Redirect("DangNhap.aspx");
                 return;
             }
 
-            // Lấy thông tin sản phẩm từ giao diện
             string maSP = lblMaSP.Text;
             string tenSP = lblTenSP.Text;
-            decimal gia = decimal.Parse(lblGia.Text.Replace("₫", "").Replace(",", "").Trim());
-            int soLuong = int.Parse(txtSoLuong.Text);
 
-            // Tạo DataTable nếu giỏ hàng chưa tồn tại
+            decimal gia;
+            string giaStr = lblGia.Text.Replace("₫", "").Replace(",", "").Trim();
+            decimal.TryParse(giaStr, out gia);
+
+            int soLuong;
+            int.TryParse(txtSoLuong.Text, out soLuong);
+            if (soLuong <= 0) soLuong = 1;
+
+            string hinhAnh = mainImage.Src;
+
             DataTable gioHang;
             if (Session["GioHang"] == null)
             {
@@ -54,51 +95,44 @@ namespace BTL
                 gioHang.Columns.Add("Gia", typeof(decimal));
                 gioHang.Columns.Add("SoLuong", typeof(int));
                 gioHang.Columns.Add("ThanhTien", typeof(decimal));
+                gioHang.Columns.Add("HinhAnh", typeof(string));
             }
             else
             {
                 gioHang = (DataTable)Session["GioHang"];
             }
 
-            // Kiểm tra sản phẩm đã có trong giỏ chưa
             DataRow existingRow = null;
             foreach (DataRow row in gioHang.Rows)
-            {
                 if (row["MaSP"].ToString() == maSP)
-                {
                     existingRow = row;
-                    break;
-                }
-            }
 
             if (existingRow != null)
             {
-                // Nếu đã có → tăng số lượng
-                int currentQty = (int)existingRow["SoLuong"];
-                existingRow["SoLuong"] = currentQty + soLuong;
+                existingRow["SoLuong"] = (int)existingRow["SoLuong"] + soLuong;
                 existingRow["ThanhTien"] = (decimal)existingRow["Gia"] * (int)existingRow["SoLuong"];
             }
             else
             {
-                // Nếu chưa có → thêm mới
                 DataRow newRow = gioHang.NewRow();
                 newRow["MaSP"] = maSP;
                 newRow["TenSP"] = tenSP;
                 newRow["Gia"] = gia;
                 newRow["SoLuong"] = soLuong;
                 newRow["ThanhTien"] = gia * soLuong;
+                newRow["HinhAnh"] = hinhAnh;
                 gioHang.Rows.Add(newRow);
             }
 
-            // Lưu lại vào Session
             Session["GioHang"] = gioHang;
 
-            // Hiển thị thông báo
-            lblMessage.ForeColor = System.Drawing.Color.Green;
-            lblMessage.Text = "✅ Sản phẩm đã được thêm vào giỏ hàng!";
-
-            // (Tùy chọn) Chuyển hướng sang giỏ hàng:
-            // Response.Redirect("GioHang.aspx");
+            if (diDenGioHang)
+                Response.Redirect("GioHang.aspx");
+            else
+            {
+                lblMessage.ForeColor = System.Drawing.Color.Green;
+                lblMessage.Text = "✅ Sản phẩm đã được thêm vào giỏ hàng!";
+            }
         }
     }
 }
